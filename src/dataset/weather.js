@@ -1,4 +1,4 @@
-export const dataset = [
+const dataset = [
     {
       ph: 8.11,
       dox: 2.73,
@@ -77,8 +77,29 @@ export const dataset = [
           timestamp: '10:00AM',
       },
   ];
-  
-  export function valueFormatter(value) {
-    return `${value}`;
+
+  const translations = {
+    ph: 'pH',
+    dox: 'Dissolved Oxygen',
+    temp: 'Temperature',
+    sal: 'Salinity'
+  }
+
+  function addLabels(series) {
+    return series.map((item) => ({
+      ...item,
+      label: translations[item.dataKey],
+      valueFormatter: (val) => {
+        if(item.dataKey === 'ph') return val
+        if(item.dataKey === 'dox') return `${val} mg/L`
+        if(item.dataKey === 'temp') return `${val} ºC`
+        if(item.dataKey === 'sal') return `${val} ppt`
+      }
+    }));
+  }
+
+  export {
+    dataset,
+    addLabels
   }
   

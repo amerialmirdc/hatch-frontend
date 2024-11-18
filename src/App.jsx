@@ -1,10 +1,9 @@
 // import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
-import { dataset, valueFormatter } from './dataset/weather';
+import { dataset, addLabels } from './dataset/weather';
 import {
   MainContainer,
-  GaugeChartContainer, 
   DashboardLayout,
   LineGraph,
   PhGauge,
@@ -17,38 +16,8 @@ import {
   TempTitle
 } from './styles/app';
 
-import {
-  GaugeContainer,
-  GaugeValueArc,
-  GaugeReferenceArc,
-  useGaugeState,
-} from '@mui/x-charts/Gauge';
-
 import GaugeComponent from 'react-gauge-component';
 
-function GaugePointer() {
-  const { valueAngle, outerRadius, cx, cy } = useGaugeState();
-
-  if (valueAngle === null) {
-    // No value to display
-    return null;
-  }
-
-  const target = {
-    x: cx + outerRadius * Math.sin(valueAngle),
-    y: cy - outerRadius * Math.cos(valueAngle),
-  };
-  return (
-    <g>
-      <circle cx={cx} cy={cy} r={5} fill="#575757" />
-      <path
-        d={`M ${cx} ${cy} L ${target.x} ${target.y}`}
-        stroke="#575757"
-        strokeWidth={3}
-      />
-    </g>
-  );
-}
 
 
 const chartSetting = {
@@ -77,33 +46,17 @@ function App() {
           <BarChart
             dataset={dataset}
             xAxis={[{ scaleType: 'band', dataKey: 'timestamp' }]}
-            series={[
-              { dataKey: 'ph', label: 'pH', valueFormatter, color:'#F2AF9F', },
-              { dataKey: 'dox', label: 'Dissolved Oxygen', valueFormatter, color:'#00B4F7', },
-              { dataKey: 'sal', label: 'Salinity', valueFormatter, color:'#ABD0BF', },
-              { dataKey: 'temp', label: 'Temperature', valueFormatter, color:'#EFA650', },
-            ]}
+            series={addLabels([
+              {dataKey: 'ph', color:'#F2AF9F'},
+              {dataKey: 'dox', color:'#00B4F7'},
+              {dataKey: 'sal', color:'#ABD0BF'},
+              {dataKey: 'temp', color:'#EFA650'},
+            ])}
             {...chartSetting}
           />
         </LineGraph>
 
         <TempGauge>
-          {/* <GaugeChartContainer >
-            <GaugeContainer
-              width={220}
-              height={220}
-              startAngle={-110}
-              endAngle={110}
-              value={30}
-              valueMax={50}
-              valueMin={0}
-              color="red"
-            >
-              <GaugeReferenceArc />
-              <GaugeValueArc />
-              <GaugePointer />
-            </GaugeContainer>
-          </GaugeChartContainer> */}
           <GaugeComponent
             type="semicircle"
             arc={{
@@ -185,19 +138,6 @@ function App() {
         </TempGauge>
 
         <SalGauge>
-          {/* <GaugeChartContainer>
-            <GaugeContainer
-              width={220}
-              height={220}
-              startAngle={-110}
-              endAngle={110}
-              value={30}
-            >
-              <GaugeReferenceArc />
-              <GaugeValueArc />
-              <GaugePointer />
-            </GaugeContainer>
-          </GaugeChartContainer> */}
           <GaugeComponent
             type="semicircle"
             arc={{
@@ -281,20 +221,6 @@ function App() {
         </SalGauge>
 
         <DoxGauge>
-          {/* <GaugeChartContainer>
-            <GaugeContainer
-              width={220}
-              height={220}
-              startAngle={-110}
-              endAngle={110}
-              value={30}
-            >
-              <GaugeReferenceArc />
-              <GaugeValueArc />
-              <GaugePointer />
-            </GaugeContainer>
-          </GaugeChartContainer> */}
-
           <GaugeComponent
             type="semicircle"
             arc={{
@@ -379,19 +305,6 @@ function App() {
         </DoxGauge>
 
         <PhGauge>
-          {/* <GaugeChartContainer>
-            <GaugeContainer
-              width={220}
-              height={220}
-              startAngle={-110}
-              endAngle={110}
-              value={30}
-            >
-              <GaugeReferenceArc />
-              <GaugeValueArc />
-              <GaugePointer />
-            </GaugeContainer>
-          </GaugeChartContainer> */}
           <GaugeComponent
             type="semicircle"
             arc={{
