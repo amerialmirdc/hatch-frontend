@@ -78,10 +78,10 @@ function App() {
             dataset={dataset}
             xAxis={[{ scaleType: 'band', dataKey: 'timestamp' }]}
             series={[
-              { dataKey: 'ph', label: 'pH', valueFormatter, color:'#d84527', },
-              { dataKey: 'dox', label: 'Dissolved Oxygen', valueFormatter, color:'#ece513', },
-              { dataKey: 'sal', label: 'Salinity', valueFormatter, color:'#54ab66', },
-              { dataKey: 'temp', label: 'Temperature', valueFormatter, color:'#484848', },
+              { dataKey: 'ph', label: 'pH', valueFormatter, color:'#F2AF9F', },
+              { dataKey: 'dox', label: 'Dissolved Oxygen', valueFormatter, color:'#00B4F7', },
+              { dataKey: 'sal', label: 'Salinity', valueFormatter, color:'#ABD0BF', },
+              { dataKey: 'temp', label: 'Temperature', valueFormatter, color:'#EFA650', },
             ]}
             {...chartSetting}
           />
@@ -157,10 +157,10 @@ function App() {
               color: '#345243',
               length: 0.80,
               width: 15,
-              // elastic: true,
+              elastic: true,
             }}
             labels={{
-              valueLabel: { formatTextValue: value => value + 'ºC' },
+              valueLabel: { formatTextValue: value => value + 'ºC', style: {display:'none'} },
               tickLabels: {
                 type: 'outer',
                 defaultTickValueConfig: { 
@@ -178,7 +178,10 @@ function App() {
             minValue={10}
             maxValue={35}
           />
-          <TempTitle>Temp</TempTitle>
+          <TempTitle>
+          <h3>22.5 ºC</h3>
+          <p>Temperature</p>
+          </TempTitle>
         </TempGauge>
 
         <SalGauge>
@@ -248,10 +251,10 @@ function App() {
               color: '#345243',
               length: 0.80,
               width: 15,
-              // elastic: true,
+              elastic: true,
             }}
             labels={{
-              valueLabel: { formatTextValue: value => value + 'ppt' },
+              valueLabel: { formatTextValue: value => value + 'ppt', style: {display:'none'} },
               tickLabels: {
                 type: 'outer',
                 defaultTickValueConfig: { 
@@ -269,7 +272,12 @@ function App() {
             minValue={10}
             maxValue={35}
           />
-          <SalTitle>Sal</SalTitle>
+
+          
+          <SalTitle>
+          <h3>21.53 ppt</h3>
+          <p>Salinity</p>
+          </SalTitle>
         </SalGauge>
 
         <DoxGauge>
@@ -340,10 +348,12 @@ function App() {
               color: '#345243',
               length: 0.80,
               width: 15,
-              // elastic: true,
+              elastic: true,
             }}
             labels={{
-              valueLabel: { formatTextValue: value => value + 'mg/L' },
+              valueLabel: { formatTextValue: value => value + 'mg/L', 
+                style: {display:'none'}
+              },
               tickLabels: {
                 type: 'outer',
                 defaultTickValueConfig: { 
@@ -362,7 +372,10 @@ function App() {
             maxValue={30}
           />
             
-          <DoxTitle>Dox</DoxTitle>
+          <DoxTitle>
+          <h3>8.07 mg/L</h3>
+          <p>Dissolved Oxygen</p>
+          </DoxTitle>
         </DoxGauge>
 
         <PhGauge>
@@ -432,10 +445,10 @@ function App() {
               color: '#345243',
               length: 0.80,
               width: 15,
-              // elastic: true,
+              elastic: true,
             }}
             labels={{
-              valueLabel: { formatTextValue: value => value + ' ' },
+              valueLabel: { formatTextValue: value => value + ' ', style: {display:'none'} },
               tickLabels: {
                 type: 'outer',
                 defaultTickValueConfig: { 
@@ -453,7 +466,10 @@ function App() {
             minValue={0}
             maxValue={15}
           />
-          <PhTitle>pH</PhTitle>
+          <PhTitle>
+            <h3>8.06</h3>
+            <p>pH</p>
+          </PhTitle>
         </PhGauge>
       </DashboardLayout>
     </MainContainer>

@@ -60,27 +60,75 @@ const TempGauge = styled.div`
 `
 const PhTitle = styled.div`
     font-size: 18px;
-    position: relative;
-    top: 35px;
     color: #696969;
+    font-family: Arial;
+    & h3 {
+        text-align: center;
+        font-size: 24px;
+        margin: 0;
+    }
+    & p {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: monospace;
+        color: #616161cc;
+        margin-top: 6px;
+        text-align: center;
+    }
 `
 const SalTitle = styled.div`
     font-size: 18px;
-    position: relative;
-    top: 35px;
     color: #696969;
+    font-family: Arial;
+    & h3 {
+        text-align: center;
+        font-size: 24px;
+        margin: 0;
+    }
+    & p {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: monospace;
+        color: #616161cc;
+        margin-top: 6px;
+        text-align: center;
+    }
 `
 const DoxTitle = styled.div`
     font-size: 18px;
-    position: relative;
-    top: 35px;
     color: #696969;
+    font-family: Arial;
+    & h3 {
+        text-align: center;
+        font-size: 24px;
+        margin: 0;
+    }
+    & p {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: monospace;
+        color: #616161cc;
+        margin-top: 6px;
+        text-align: center;
+    }
 `
 const TempTitle = styled.div`
     font-size: 18px;
-    position: relative;
-    top: 35px;
     color: #696969;
+    font-family: Arial;
+    & h3 {
+        text-align: center;
+        font-size: 24px;
+        margin: 0;
+    }
+    & p {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: monospace;
+        color: #616161cc;
+        margin-top: 6px;
+        text-align: center;
+    }
 `
 
 export {
