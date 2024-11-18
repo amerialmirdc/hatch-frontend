@@ -211,7 +211,7 @@ function App() {
                   color: '#EA4228',
                   showTick: true,
                   tooltip: {
-                    text: 'Too low temperature!'
+                    text: 'Too low Salinity!'
                   },
                   onClick: () => console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
                   onMouseMove: () => console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"),
@@ -222,7 +222,7 @@ function App() {
                   color: '#F5CD19',
                   showTick: true,
                   tooltip: {
-                    text: 'Low temperature!'
+                    text: 'Low Salinity!'
                   }
                 },
                 {
@@ -230,19 +230,19 @@ function App() {
                   color: '#5BE12C',
                   showTick: true,
                   tooltip: {
-                    text: 'OK temperature!'
+                    text: 'OK Salinity!'
                   }
                 },
                 {
                   limit: 30, color: '#F5CD19', showTick: true,
                   tooltip: {
-                    text: 'High temperature!'
+                    text: 'High Salinity!'
                   }
                 },
                 {
                   color: '#EA4228',
                   tooltip: {
-                    text: 'Too high temperature!'
+                    text: 'Too high Salinity!'
                   }
                 }
               ]
@@ -308,7 +308,7 @@ function App() {
                   color: '#EA4228',
                   showTick: true,
                   tooltip: {
-                    text: 'Too low temperature!'
+                    text: 'Too low Dissolved Oxygen!'
                   },
                   onClick: () => console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
                   onMouseMove: () => console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"),
@@ -319,7 +319,7 @@ function App() {
                   color: '#F5CD19',
                   showTick: true,
                   tooltip: {
-                    text: 'Low temperature!'
+                    text: 'Low Dissolved Oxygen!'
                   }
                 },
                 {
@@ -327,19 +327,19 @@ function App() {
                   color: '#5BE12C',
                   showTick: true,
                   tooltip: {
-                    text: 'OK temperature!'
+                    text: 'OK Dissolved Oxygen!'
                   }
                 },
                 {
                   limit: 30, color: '#F5CD19', showTick: true,
                   tooltip: {
-                    text: 'High temperature!'
+                    text: 'High Dissolved Oxygen!'
                   }
                 },
                 {
                   color: '#EA4228',
                   tooltip: {
-                    text: 'Too high temperature!'
+                    text: 'Too high Dissolved Oxygen!'
                   }
                 }
               ]
@@ -405,7 +405,7 @@ function App() {
                   color: '#EA4228',
                   showTick: true,
                   tooltip: {
-                    text: 'Too low temperature!'
+                    text: 'Too low pH!'
                   },
                   onClick: () => console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
                   onMouseMove: () => console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"),
@@ -416,7 +416,7 @@ function App() {
                   color: '#F5CD19',
                   showTick: true,
                   tooltip: {
-                    text: 'Low temperature!'
+                    text: 'Low pH!'
                   }
                 },
                 {
@@ -424,19 +424,19 @@ function App() {
                   color: '#5BE12C',
                   showTick: true,
                   tooltip: {
-                    text: 'OK temperature!'
+                    text: 'OK pH!'
                   }
                 },
                 {
                   limit: 10, color: '#F5CD19', showTick: true,
                   tooltip: {
-                    text: 'High temperature!'
+                    text: 'High pH!'
                   }
                 },
                 {
                   color: '#EA4228',
                   tooltip: {
-                    text: 'Too high temperature!'
+                    text: 'Too high pH!'
                   }
                 }
               ]
