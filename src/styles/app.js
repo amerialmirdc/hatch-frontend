@@ -35,47 +35,51 @@ const PhGauge = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
+    padding: 4px;
 `
 const SalGauge = styled.div`
     grid-area: sal-gauge;
     display: flex;
     align-items: center;
     flex-direction: column;
+    padding: 4px;
 `
 const DoxGauge = styled.div`
     grid-area: dox-gauge;
     display: flex;
     align-items: center;
     flex-direction: column;
+    padding: 4px;
 `
 const TempGauge = styled.div`
     grid-area: temp-gauge;
     display: flex;
     align-items: center;
     flex-direction: column;
+    padding: 4px;
 `
 const PhTitle = styled.div`
     font-size: 18px;
     position: relative;
-    top: -100px;
+    top: 35px;
     color: #696969;
 `
 const SalTitle = styled.div`
     font-size: 18px;
     position: relative;
-    top: -100px;
+    top: 35px;
     color: #696969;
 `
 const DoxTitle = styled.div`
     font-size: 18px;
     position: relative;
-    top: -100px;
+    top: 35px;
     color: #696969;
 `
 const TempTitle = styled.div`
     font-size: 18px;
     position: relative;
-    top: -100px;
+    top: 35px;
     color: #696969;
 `
 
