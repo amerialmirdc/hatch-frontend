@@ -230,7 +230,7 @@ function App() {
               // gradient: true,
               subArcs: [
                 {
-                  limit: 15,
+                  limit: 4,
                   color: '#EA4228',
                   showTick: true,
                   tooltip: {
@@ -241,7 +241,7 @@ function App() {
                   onMouseLeave: () => console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"),
                 },
                 {
-                  limit: 17,
+                  limit: 7,
                   color: '#F5CD19',
                   showTick: true,
                   tooltip: {
@@ -249,7 +249,7 @@ function App() {
                   }
                 },
                 {
-                  limit: 28,
+                  limit: 20,
                   color: '#5BE12C',
                   showTick: true,
                   tooltip: {
@@ -257,7 +257,7 @@ function App() {
                   }
                 },
                 {
-                  limit: 30, color: '#F5CD19', showTick: true,
+                  limit: 24, color: '#F5CD19', showTick: true,
                   tooltip: {
                     text: 'High Dissolved Oxygen!'
                   }
@@ -314,7 +314,7 @@ function App() {
               // gradient: true,
               subArcs: [
                 {
-                  limit: 1,
+                  limit: 3,
                   color: '#EA4228',
                   showTick: true,
                   tooltip: {
@@ -325,7 +325,7 @@ function App() {
                   onMouseLeave: () => console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"),
                 },
                 {
-                  limit: 7,
+                  limit: 6.9,
                   color: '#F5CD19',
                   showTick: true,
                   tooltip: {
@@ -333,7 +333,7 @@ function App() {
                   }
                 },
                 {
-                  limit: 9,
+                  limit: 9.9,
                   color: '#5BE12C',
                   showTick: true,
                   tooltip: {
@@ -341,7 +341,7 @@ function App() {
                   }
                 },
                 {
-                  limit: 10, color: '#F5CD19', showTick: true,
+                  limit: 12, color: '#F5CD19', showTick: true,
                   tooltip: {
                     text: 'High pH!'
                   }
