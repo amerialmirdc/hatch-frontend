@@ -28,8 +28,7 @@ const LandscapeLineChart = styled.div`
     position: fixed;
     bottom: 0;
     top:0;
-    // left: -${ratio<1.8?(deviceWidth-(deviceWidth*0.33)):(deviceWidth+(deviceWidth*0.07))}px;
-    left: -${(deviceHeight)/2}px;
+    left: -${ratio<1.8?((deviceHeight)/2)+((deviceHeight/2)*(ratio-2)):((deviceHeight)/2)}px;
     display: none;
 
     @media screen and (min-width: 300px) {
