@@ -6,6 +6,8 @@ import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 
 const deviceWidth = window.innerWidth
 const deviceHeight = window.innerHeight
+const ratio = deviceHeight/deviceWidth;
+console.log('ratio', ratio)
 
 const MainContainer = styled.div`
     max-width: 1200px;
@@ -22,10 +24,11 @@ const MainContainer = styled.div`
 `
 
 const LandscapeLineChart = styled.div`
-    transform: rotate(270deg);
+    transform: rotate(90deg);
     position: fixed;
-    bottom: ${(deviceHeight/4)+(deviceHeight*0.03)}px;
-    left: -${(deviceWidth/2)+(deviceWidth*0.05)}px;
+    bottom: 0;
+    top:0;
+    left: -${ratio<1.8?(deviceWidth-(deviceWidth*0.33)):(deviceWidth+(deviceWidth*0.07))}px;
     display: none;
 
     @media screen and (min-width: 300px) {

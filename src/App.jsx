@@ -22,13 +22,14 @@ import axios from 'axios'
 import GaugeComponent from 'react-gauge-component';
 
 
-const deviceWidth = window.innerWidth
-const deviceHeight = window.innerHeight
+let deviceWidth = window.innerWidth
+let deviceHeight = window.innerHeight
 console.log("window width", window.innerWidth)
 console.log("window height", window.innerHeight)
 
 let lineChartWidth = 0
 let lineChartHeight = 0
+let ratio = deviceHeight/deviceWidth;
 
 if(deviceWidth > 1200){
   lineChartWidth = (deviceWidth-(deviceWidth * 0.2))
@@ -58,13 +59,13 @@ const chartSetting = {
   },
 };
 
-const chartSettingForLandscape = {
+let chartSettingForLandscape = {
   yAxis: [
     {
       label: '',
     },
   ],
-  width: deviceHeight,
+  width: (deviceHeight-90),
   // width: (deviceWidth - (deviceWidth/4)),
   height: deviceWidth,
   sx: {
@@ -73,6 +74,30 @@ const chartSettingForLandscape = {
 
     },
   },
+};
+
+window.onresize = function() {
+  deviceWidth = window.innerWidth
+  deviceHeight = window.innerHeight
+  ratio = deviceHeight/deviceWidth;
+  console.log(ratio)
+
+  chartSettingForLandscape = {
+    yAxis: [
+      {
+        label: '',
+      },
+    ],
+    width: (deviceHeight-90),
+    // width: (deviceWidth - (deviceWidth/4)),
+    height: deviceWidth,
+    sx: {
+      [`.${axisClasses.left} .${axisClasses.label}`]: {
+        transform: 'translate(-20px, 0)',
+  
+      },
+    },
+  };
 };
 
 
