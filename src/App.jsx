@@ -1,4 +1,4 @@
-// import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
 import { dataset, addLabels } from './dataset/weather';
@@ -15,9 +15,29 @@ import {
   DoxTitle,
   TempTitle
 } from './styles/app';
+import axios from 'axios'
 
 import GaugeComponent from 'react-gauge-component';
 
+
+const deviceWidth = window.innerWidth
+const deviceHeight = window.innerHeight
+console.log("window width", window.innerWidth)
+console.log("window height", window.innerHeight)
+
+let lineChartWidth = 0
+let lineChartHeight = 0
+
+if(deviceWidth > 1200){
+  lineChartWidth = (deviceWidth-(deviceWidth * 0.2))
+  lineChartHeight = deviceHeight/2
+}else if(deviceWidth > 700){
+  lineChartWidth = (deviceWidth-(deviceWidth * 0.1))
+  lineChartHeight = deviceHeight/2.5
+}else{
+  lineChartWidth = 320
+  lineChartHeight = 280
+}
 
 
 const chartSetting = {
@@ -26,8 +46,9 @@ const chartSetting = {
       label: '',
     },
   ],
-  width: 1200,
-  height: 350,
+  width: lineChartWidth,
+  // width: (deviceWidth - (deviceWidth/4)),
+  height: lineChartHeight,
   sx: {
     [`.${axisClasses.left} .${axisClasses.label}`]: {
       transform: 'translate(-20px, 0)',
@@ -36,7 +57,30 @@ const chartSetting = {
 };
 
 
+
+
 function App() {
+  const [curReadings, setCurReadings] = useState([])
+
+  useEffect(() => {
+
+    const config = {
+        headers: {
+            "Authorization": "Bearer ac7e0602ef932054c46724a7cba463ee0cfc3f39294b6242545399bcd6396e59fa62a455d483f2859b8a179fd5cac85ccc0978e0a7dd5a237035dca0b3ab5b3937a4eb7cf14cb9ea92d34c35e019801ed3dcaf2f405c93d5a3ed26c819e37eae07bbe054d1c186566017eada21f14b6a533d528769c8c26ef3f89aae75634529"
+        }
+    }
+
+    const fetchData = async () => {
+      try {
+        const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=1', config);
+        console.log(response)
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+    fetchData();
+  },[])
+
 
   return (
     <MainContainer>
