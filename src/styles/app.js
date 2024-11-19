@@ -1,7 +1,11 @@
 import styled from "styled-components"
+import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 
 // console.log("window width", window.innerWidth)
 // const deviceWidth = window.innerWidth
+
+const deviceWidth = window.innerWidth
+const deviceHeight = window.innerHeight
 
 const MainContainer = styled.div`
     max-width: 1200px;
@@ -17,13 +21,20 @@ const MainContainer = styled.div`
     }
 `
 
-const GaugeChartContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    position: relative;
-    top: -70px;
+const LandscapeLineChart = styled.div`
+    transform: rotate(270deg);
+    position: fixed;
+    bottom: ${(deviceHeight/4)+(deviceHeight*0.03)}px;
+    left: -${(deviceWidth/2)+(deviceWidth*0.05)}px;
+    display: none;
+
+    @media screen and (min-width: 300px) {
+        display: block;
+    }
+    @media screen and (min-width: 600px) {
+        display: none;
+    }
+    
 `
 
 const DashboardLayout = styled.div`
@@ -58,6 +69,20 @@ const DashboardLayout = styled.div`
     }
 `
 
+const FloatingMenuIcon = styled(ChangeCircleOutlinedIcon)`
+    color: #ABD0BF;
+    font-size: 40px;
+    position: fixed;
+    z-index: 999;
+    right: 16px;
+    top: 16px;
+    display: block !important;
+
+    @media screen and (min-width: 600px) {
+        display: none !important;
+    }
+`
+
 const LineGraph = styled.div`
     grid-area: line-graph;
     display: flex;
@@ -78,11 +103,14 @@ const PhGauge = styled.div`
     align-items: center;
     flex-direction: column;
     padding: 4px;
-    
+    margin-top: 30px;
     
     @media screen and (min-width: 300px) {
         padding-top: 32px;
         padding-bottom: 32px;
+    }
+    @media screen and (min-width: 600px) {
+        margin-top:0;
     }
     @media screen and (min-width: 700px) {
         padding-bottom: 0px;
@@ -235,8 +263,9 @@ const TempTitle = styled.div`
 
 export {
     MainContainer,
-    GaugeChartContainer, 
-    DashboardLayout, 
+    DashboardLayout,
+    LandscapeLineChart,
+    FloatingMenuIcon,
     LineGraph, 
     PhGauge,
     SalGauge,

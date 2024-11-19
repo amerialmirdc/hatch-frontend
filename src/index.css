@@ -3,3 +3,63 @@ html, body {
   padding: 0;
   /* background: #2c2323; */
 }
+
+.rotate {
+  -webkit-animation:spin 0.5s ease-in-out;
+  -moz-animation:spin 0.5s ease-in-out;
+  animation:spin 0.5s ease-in-out;
+}
+
+@-moz-keyframes spin { 
+  100% { -moz-transform: rotate(360deg); } 
+}
+@-webkit-keyframes spin { 
+  100% { -webkit-transform: rotate(360deg); } 
+}
+@keyframes spin { 
+  100% { 
+      -webkit-transform: rotate(360deg); 
+      transform:rotate(360deg); 
+  } 
+}
+
+
+.show-content {
+  opacity: 1;
+  position: relative;
+  z-index: 0;
+  animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in-out;
+	animation-duration: 0.3s;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+    
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.hidden-content {
+  opacity: 0;
+  position: relative;
+  z-index: -999;
+
+  animation-name: fadeOutOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in-out;
+	animation-duration: 0.4s;
+}
+
+@keyframes fadeOutOpacity {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}

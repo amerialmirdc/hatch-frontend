@@ -5,6 +5,8 @@ import { dataset, addLabels } from './dataset/weather';
 import {
   MainContainer,
   DashboardLayout,
+  LandscapeLineChart,
+  FloatingMenuIcon,
   LineGraph,
   PhGauge,
   SalGauge,
@@ -56,11 +58,30 @@ const chartSetting = {
   },
 };
 
+const chartSettingForLandscape = {
+  yAxis: [
+    {
+      label: '',
+    },
+  ],
+  width: deviceHeight,
+  // width: (deviceWidth - (deviceWidth/4)),
+  height: deviceWidth,
+  sx: {
+    [`.${axisClasses.left} .${axisClasses.label}`]: {
+      transform: 'translate(-20px, 0)',
+
+    },
+  },
+};
+
 
 
 
 function App() {
   const [curReadings, setCurReadings] = useState([])
+  const [rotateStatus, setRotateStatus] = useState(false)
+  const [hideGauges, setHideGauges] = useState(false)
 
   useEffect(() => {
 
@@ -82,10 +103,35 @@ function App() {
   },[])
 
 
+  const toggleMenu = () => {
+    setRotateStatus(true)
+    setHideGauges(!hideGauges)
+    setTimeout(()=>{
+      setRotateStatus(false)
+    }, 1000) 
+  }
+
+
   return (
     <MainContainer>
-      
-      <DashboardLayout>
+
+      <FloatingMenuIcon onClick={toggleMenu} className={`${rotateStatus?'rotate':''}`} fontSize=""></FloatingMenuIcon>
+
+      <LandscapeLineChart className={`${!hideGauges?'hidden-content':'show-content'}`}>
+        <BarChart
+            dataset={dataset}
+            xAxis={[{ scaleType: 'band', dataKey: 'timestamp' }]}
+            series={addLabels([
+              {dataKey: 'ph', color:'#F2AF9F'},
+              {dataKey: 'dox', color:'#00B4F7'},
+              {dataKey: 'sal', color:'#ABD0BF'},
+              {dataKey: 'temp', color:'#EFA650'},
+            ])}
+            {...chartSettingForLandscape}
+          />
+      </LandscapeLineChart>
+
+      <DashboardLayout className={`${hideGauges?'hidden-content':'show-content'}`}>
         <LineGraph>
           <BarChart
             dataset={dataset}
