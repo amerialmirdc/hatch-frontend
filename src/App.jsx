@@ -199,7 +199,6 @@ function App() {
 
   return (
     <MainContainer>
-      <h1>{curReadings?.attributes?.dox}</h1>
       <FloatingMenuIcon onClick={toggleMenu} className={`${rotateStatus?'rotate':''}`} fontSize=""></FloatingMenuIcon>
       <LandscapeLineChart className={`${!hideGauges?'hidden-content':'show-content'}`}>
         <BarChart
