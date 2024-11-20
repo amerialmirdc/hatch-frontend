@@ -107,25 +107,54 @@ function App() {
   const [curReadings, setCurReadings] = useState([])
   const [rotateStatus, setRotateStatus] = useState(false)
   const [hideGauges, setHideGauges] = useState(false)
+  const [dissolvedOxygen, setDissolvedOxygen] = useState(0)
+  const [temperature, setTemperature] = useState(0)
+  const [salinity, setSalinity] = useState(0)
+  const [ph, setPh] = useState(0)
+
 
   useEffect(() => {
-
     const config = {
-        headers: {
-            "Authorization": "Bearer ac7e0602ef932054c46724a7cba463ee0cfc3f39294b6242545399bcd6396e59fa62a455d483f2859b8a179fd5cac85ccc0978e0a7dd5a237035dca0b3ab5b3937a4eb7cf14cb9ea92d34c35e019801ed3dcaf2f405c93d5a3ed26c819e37eae07bbe054d1c186566017eada21f14b6a533d528769c8c26ef3f89aae75634529"
-        }
+      headers: {
+          "Authorization": "Bearer ac7e0602ef932054c46724a7cba463ee0cfc3f39294b6242545399bcd6396e59fa62a455d483f2859b8a179fd5cac85ccc0978e0a7dd5a237035dca0b3ab5b3937a4eb7cf14cb9ea92d34c35e019801ed3dcaf2f405c93d5a3ed26c819e37eae07bbe054d1c186566017eada21f14b6a533d528769c8c26ef3f89aae75634529"
+      }
     }
 
     const fetchData = async () => {
-      try {
-        const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=1', config);
+      try { 
+        const {data: response} = await axios.get('https://hatch-middleman.netlify.app/api/hatch-get-latest-readings', config);
+        // const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=1', config);
         console.log(response)
+        setCurReadings(response.data[0])
+        setDissolvedOxygen(response.data[0]?.attributes?.dox);
+        setSalinity(response.data[0]?.attributes?.sal);
+        setTemperature(response.data[0]?.attributes?.rtd);
+        setPh(response.data[0]?.attributes?.ph);
+        
       } catch (error) {
         console.error(error.message);
       }
     }
     fetchData();
-  },[])
+
+
+    let fetchDataOnInterval = setInterval(async ()=>{
+      // const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=1', config);
+      // console.log(response)
+      
+      setCurReadings((Math.random() * 10).toFixed(2))
+      setDissolvedOxygen((Math.random() * 10).toFixed(2));
+      setSalinity((Math.random() + (Math.ceil(Math.random()*10)) * Math.ceil(Math.random()*5)).toFixed(2));
+      setTemperature((Math.random() + (Math.ceil(Math.random()*10)) * Math.ceil(Math.random()*5)).toFixed(2));
+      setPh((Math.random() * 10).toFixed(2));
+      console.log('refetch data.')
+    }, 10000);
+
+    return () => {
+      clearInterval(fetchDataOnInterval);
+      console.log("cleaned up");
+    };
+  }, []);
 
 
   const toggleMenu = () => {
@@ -136,12 +165,13 @@ function App() {
     }, 1000) 
   }
 
+  
+
 
   return (
     <MainContainer>
-
+      <h1>{curReadings?.attributes?.dox}</h1>
       <FloatingMenuIcon onClick={toggleMenu} className={`${rotateStatus?'rotate':''}`} fontSize=""></FloatingMenuIcon>
-
       <LandscapeLineChart className={`${!hideGauges?'hidden-content':'show-content'}`}>
         <BarChart
             dataset={dataset}
@@ -170,7 +200,7 @@ function App() {
             {...chartSetting}
           />
         </LineGraph>
-
+            
         <TempGauge>
           <GaugeComponent
             type="semicircle"
@@ -237,17 +267,17 @@ function App() {
               },
                 ticks: [
                   { value: 13 },
-                  { value: 22.5 },
+                  { value: temperature },
                   { value: 32 }
                 ],
               }
             }}
-            value={22.5}
+            value={temperature}
             minValue={10}
             maxValue={35}
           />
           <TempTitle>
-          <h3>22.5 ºC</h3>
+          <h3>{temperature} ºC</h3>
           <p>Temperature</p>
           </TempTitle>
         </TempGauge>
@@ -318,19 +348,19 @@ function App() {
               },
                 ticks: [
                   { value: 13 },
-                  { value: 21.53 },
+                  { value: salinity },
                   { value: 32 }
                 ],
               }
             }}
-            value={21.53}
+            value={salinity}
             minValue={10}
             maxValue={35}
           />
 
           
           <SalTitle>
-          <h3>21.53 ppt</h3>
+          <h3>{salinity} ppt</h3>
           <p>Salinity</p>
           </SalTitle>
         </SalGauge>
@@ -403,18 +433,18 @@ function App() {
               },
                 ticks: [
                   { value: 13 },
-                  { value: 8.07 },
+                  { value: dissolvedOxygen },
                   { value: 32 }
                 ],
               }
             }}
-            value={8.07}
+            value={dissolvedOxygen}
             minValue={0}
             maxValue={30}
           />
             
           <DoxTitle>
-          <h3>8.07 mg/L</h3>
+          <h3>{dissolvedOxygen} mg/L</h3>
           <p>Dissolved Oxygen</p>
           </DoxTitle>
         </DoxGauge>
@@ -485,17 +515,17 @@ function App() {
               },
                 ticks: [
                   { value: 0 },
-                  { value: 8.06 },
+                  { value: ph },
                   { value: 15 }
                 ],
               }
             }}
-            value={8.06}
+            value={ph}
             minValue={0}
             maxValue={15}
           />
           <PhTitle>
-            <h3>8.06</h3>
+            <h3>{ph}</h3>
             <p>pH</p>
           </PhTitle>
         </PhGauge>
