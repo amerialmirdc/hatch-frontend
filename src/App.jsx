@@ -20,6 +20,7 @@ import {
 import axios from 'axios'
 
 import GaugeComponent from 'react-gauge-component';
+import moment from 'moment'
 
 
 let deviceWidth = window.innerWidth
@@ -111,6 +112,7 @@ function App() {
   const [temperature, setTemperature] = useState(0)
   const [salinity, setSalinity] = useState(0)
   const [ph, setPh] = useState(0)
+  const [sensorReaings_latest, setSensorReadings_latest] = useState([])
 
 
   useEffect(() => {
@@ -120,16 +122,17 @@ function App() {
       }
     }
 
+    // fetch latest sensor reading
     const fetchData = async () => {
       try { 
-        const {data: response} = await axios.get('https://hatch-middleman.netlify.app/api/hatch-get-latest-readings', config);
-        // const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=1', config);
+        // const {data: response} = await axios.get('https://hatch-middleman.netlify.app/api/hatch-get-latest-readings', config);
+        const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=1', config);
         console.log(response)
         setCurReadings(response.data[0])
-        setDissolvedOxygen(response.data[0]?.attributes?.dox);
-        setSalinity(response.data[0]?.attributes?.sal);
-        setTemperature(response.data[0]?.attributes?.rtd);
-        setPh(response.data[0]?.attributes?.ph);
+        setDissolvedOxygen(response.data[0]?.attributes?.dox || 0);
+        setSalinity(response.data[0]?.attributes?.sal || 0);
+        setTemperature(response.data[0]?.attributes?.rtd || 0);
+        setPh(response.data[0]?.attributes?.ph || 0);
         
       } catch (error) {
         console.error(error.message);
@@ -137,6 +140,32 @@ function App() {
     }
     fetchData();
 
+    //fetch latest 12
+    const fetchData2 = async () => {
+      try { 
+        const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=12', config);
+        console.log('latest 12', response.data)
+        let formattedData = []
+        if(response.data){
+          response.data.forEach((i)=>{
+            formattedData.push({
+              ph: i?.attributes?.ph,
+              dox: i?.attributes?.dox,
+              sal: i?.attributes?.sal,
+              temp: i?.attributes?.rtd,
+              timestamp: moment(`${i?.attributes?.date} ${i?.attributes?.time}`).format('LT'),
+            })
+          })
+
+          console.log('formatted data', formattedData)
+          setSensorReadings_latest(formattedData);
+        }
+        
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+    fetchData2();
 
     let fetchDataOnInterval = setInterval(async ()=>{
       // const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=1', config);
@@ -174,7 +203,7 @@ function App() {
       <FloatingMenuIcon onClick={toggleMenu} className={`${rotateStatus?'rotate':''}`} fontSize=""></FloatingMenuIcon>
       <LandscapeLineChart className={`${!hideGauges?'hidden-content':'show-content'}`}>
         <BarChart
-            dataset={dataset}
+            dataset={sensorReaings_latest}
             xAxis={[{ scaleType: 'band', dataKey: 'timestamp' }]}
             series={addLabels([
               {dataKey: 'ph', color:'#F2AF9F'},
@@ -189,7 +218,7 @@ function App() {
       <DashboardLayout className={`${hideGauges?'hidden-content':'show-content'}`}>
         <LineGraph>
           <BarChart
-            dataset={dataset}
+            dataset={sensorReaings_latest}
             xAxis={[{ scaleType: 'band', dataKey: 'timestamp' }]}
             series={addLabels([
               {dataKey: 'ph', color:'#F2AF9F'},
