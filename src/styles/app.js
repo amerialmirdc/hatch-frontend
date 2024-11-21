@@ -205,8 +205,18 @@ const PhTitle = styled.div`
         letter-spacing: 1px;
         font-family: monospace;
         color: #616161cc;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        text-align: center;
+    }
+    & h6 {
+        text-transform: uppercase;
+        font-family: monospace;
+        color: #616161cc;
         margin-top: 6px;
         text-align: center;
+        font-size: 11px;
+        margin: 0;
     }
 `
 const SalTitle = styled.div`
@@ -223,8 +233,18 @@ const SalTitle = styled.div`
         letter-spacing: 1px;
         font-family: monospace;
         color: #616161cc;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        text-align: center;
+    }
+    & h6 {
+        text-transform: uppercase;
+        font-family: monospace;
+        color: #616161cc;
         margin-top: 6px;
         text-align: center;
+        font-size: 11px;
+        margin: 0;
     }
 `
 const DoxTitle = styled.div`
@@ -241,8 +261,18 @@ const DoxTitle = styled.div`
         letter-spacing: 1px;
         font-family: monospace;
         color: #616161cc;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        text-align: center;
+    }
+    & h6 {
+        text-transform: uppercase;
+        font-family: monospace;
+        color: #616161cc;
         margin-top: 6px;
         text-align: center;
+        font-size: 11px;
+        margin: 0;
     }
 `
 const TempTitle = styled.div`
@@ -259,8 +289,18 @@ const TempTitle = styled.div`
         letter-spacing: 1px;
         font-family: monospace;
         color: #616161cc;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        text-align: center;
+    }
+    & h6 {
+        text-transform: uppercase;
+        font-family: monospace;
+        color: #616161cc;
         margin-top: 6px;
         text-align: center;
+        font-size: 11px;
+        margin: 0;
     }
 `
 

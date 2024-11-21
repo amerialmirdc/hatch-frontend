@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
-import { dataset, addLabels } from './dataset/weather';
+import { addLabels } from './dataset/weather';
 import {
   MainContainer,
   DashboardLayout,
@@ -111,7 +111,11 @@ function Dashboard() {
   const [dissolvedOxygen, setDissolvedOxygen] = useState(0)
   const [temperature, setTemperature] = useState(0)
   const [salinity, setSalinity] = useState(0)
-  const [ph, setPh] = useState(0)
+  const [ph, setpH] = useState(0)
+  const [dissolvedOxygen_d, setDissolvedOxygen_d] = useState(0)
+  const [temperature_d, setTemperature_d] = useState(0)
+  const [salinity_d, setSalinity_d] = useState(0)
+  const [ph_d, setPh_d] = useState(0)
   const [sensorReaings_latest, setSensorReadings_latest] = useState([])
 
 
@@ -132,7 +136,12 @@ function Dashboard() {
         setDissolvedOxygen(response.data[0]?.attributes?.dox || 0);
         setSalinity(response.data[0]?.attributes?.sal || 0);
         setTemperature(response.data[0]?.attributes?.rtd || 0);
-        setPh(response.data[0]?.attributes?.ph || 0);
+        setpH(response.data[0]?.attributes?.ph || 0)
+        setCurReadings(response.data[0])
+        setDissolvedOxygen_d(moment(`${response.data[0]?.attributes?.createdAt}`).format('llll') || '-');
+        setSalinity_d(moment(`${response.data[0]?.attributes?.createdAt}`).format('llll') || '-');
+        setTemperature_d(moment(`${response.data[0]?.attributes?.createdAt}`).format('llll') || '-');
+        setPh_d(moment(`${response.data[0]?.attributes?.createdAt}`).format('llll') || '-');
         
       } catch (error) {
         console.error(error.message);
@@ -186,6 +195,7 @@ function Dashboard() {
 
           console.log('formatted data', formattedData)
           setSensorReadings_latest(formattedData);
+          fetchData();
         }
         
       } catch (error) {
@@ -321,6 +331,7 @@ function Dashboard() {
           <TempTitle>
           <h3>{temperature} ºC</h3>
           <p>Temperature</p>
+          <h6>{temperature_d}</h6>
           </TempTitle>
         </TempGauge>
 
@@ -404,6 +415,7 @@ function Dashboard() {
           <SalTitle>
           <h3>{salinity} ppt</h3>
           <p>Salinity</p>
+          <h6>{salinity_d}</h6>
           </SalTitle>
         </SalGauge>
 
@@ -488,6 +500,7 @@ function Dashboard() {
           <DoxTitle>
           <h3>{dissolvedOxygen} mg/L</h3>
           <p>Dissolved Oxygen</p>
+          <h6>{dissolvedOxygen_d}</h6>
           </DoxTitle>
         </DoxGauge>
 
@@ -569,6 +582,7 @@ function Dashboard() {
           <PhTitle>
             <h3>{ph}</h3>
             <p>pH</p>
+            <h6>{ph_d}</h6>
           </PhTitle>
         </PhGauge>
       </DashboardLayout>
