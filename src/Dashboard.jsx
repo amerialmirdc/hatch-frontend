@@ -138,10 +138,10 @@ function Dashboard() {
         setTemperature(response.data[0]?.attributes?.rtd || 0);
         setpH(response.data[0]?.attributes?.ph || 0)
         setCurReadings(response.data[0])
-        setDissolvedOxygen_d(moment(`${response.data[0]?.attributes?.createdAt}`).format('llll') || '-');
-        setSalinity_d(moment(`${response.data[0]?.attributes?.createdAt}`).format('llll') || '-');
-        setTemperature_d(moment(`${response.data[0]?.attributes?.createdAt}`).format('llll') || '-');
-        setPh_d(moment(`${response.data[0]?.attributes?.createdAt}`).format('llll') || '-');
+        setDissolvedOxygen_d(moment(`${response.data[0]?.attributes?.createdAt}`).add(5, 'minutes').format('llll') || '-');
+        setSalinity_d(moment(`${response.data[0]?.attributes?.createdAt}`).add(5, 'minutes').format('llll') || '-');
+        setTemperature_d(moment(`${response.data[0]?.attributes?.createdAt}`).add(5, 'minutes').format('llll') || '-');
+        setPh_d(moment(`${response.data[0]?.attributes?.createdAt}`).add(5, 'minutes').format('llll') || '-');
         
       } catch (error) {
         console.error(error.message);
@@ -162,7 +162,7 @@ function Dashboard() {
               dox: i?.attributes?.dox,
               sal: i?.attributes?.sal,
               temp: i?.attributes?.rtd,
-              timestamp: moment(`${i?.attributes?.createdAt}`).format('LT'),
+              timestamp: moment(`${i?.attributes?.createdAt}`).add(5, 'minutes').format('LT'),
             })
           })
 
@@ -178,30 +178,9 @@ function Dashboard() {
     fetchData2();
 
     let fetchDataOnInterval = setInterval(async ()=>{
-      try { 
-        const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=12', config);
-        console.log('latest 12', response.data)
-        let formattedData = []
-        if(response.data){
-          response.data.forEach((i)=>{
-            formattedData.push({
-              ph: i?.attributes?.ph,
-              dox: i?.attributes?.dox,
-              sal: i?.attributes?.sal,
-              temp: i?.attributes?.rtd,
-              timestamp: moment(`${i?.attributes?.createdAt}`).format('LT'),
-            })
-          })
-
-          console.log('formatted data', formattedData)
-          setSensorReadings_latest(formattedData);
-          fetchData();
-        }
-        
-      } catch (error) {
-        console.error(error.message);
-      }
-    }, 10000);
+        fetchData2();
+        fetchData();
+    }, 30000);
 
     return () => {
       clearInterval(fetchDataOnInterval);
