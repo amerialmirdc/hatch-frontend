@@ -153,7 +153,7 @@ function App() {
               dox: i?.attributes?.dox,
               sal: i?.attributes?.sal,
               temp: i?.attributes?.rtd,
-              timestamp: moment(`${i?.attributes?.date} ${i?.attributes?.time}`).format('LT'),
+              timestamp: moment(`${i?.attributes?.createdAt}`).format('LT'),
             })
           })
 
@@ -168,15 +168,28 @@ function App() {
     fetchData2();
 
     let fetchDataOnInterval = setInterval(async ()=>{
-      // const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=1', config);
-      // console.log(response)
-      
-      setCurReadings((Math.random() * 10).toFixed(2))
-      setDissolvedOxygen((Math.random() * 10).toFixed(2));
-      setSalinity((Math.random() + (Math.ceil(Math.random()*10)) * Math.ceil(Math.random()*5)).toFixed(2));
-      setTemperature((Math.random() + (Math.ceil(Math.random()*10)) * Math.ceil(Math.random()*5)).toFixed(2));
-      setPh((Math.random() * 10).toFixed(2));
-      console.log('refetch data.')
+      try { 
+        const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=12', config);
+        console.log('latest 12', response.data)
+        let formattedData = []
+        if(response.data){
+          response.data.forEach((i)=>{
+            formattedData.push({
+              ph: i?.attributes?.ph,
+              dox: i?.attributes?.dox,
+              sal: i?.attributes?.sal,
+              temp: i?.attributes?.rtd,
+              timestamp: moment(`${i?.attributes?.createdAt}`).format('LT'),
+            })
+          })
+
+          console.log('formatted data', formattedData)
+          setSensorReadings_latest(formattedData);
+        }
+        
+      } catch (error) {
+        console.error(error.message);
+      }
     }, 10000);
 
     return () => {
