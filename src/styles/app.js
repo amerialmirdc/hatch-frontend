@@ -52,10 +52,10 @@ const DashboardLayout = styled.div`
         grid-template-columns: 1fr;
         grid-template-areas:
         "line-graph"
-        "ph-gauge"
-        "sal-gauge"
+        "temp-gauge"
         "dox-gauge"
-        "temp-gauge";
+        "sal-gauge"
+        "ph-gauge";
     }
     @media screen and (min-width: 700px) {
         grid-template-columns: 1fr 1fr;
