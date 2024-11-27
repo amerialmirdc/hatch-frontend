@@ -61,14 +61,14 @@ const DashboardLayout = styled.div`
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
         "line-graph line-graph"
-        "ph-gauge sal-gauge"
-        "dox-gauge temp-gauge";
+        "temp-gauge dox-gauge"
+        "sal-gauge ph-gauge";
     }
     @media screen and (min-width: 1400px) {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-areas:
         "line-graph line-graph line-graph line-graph"
-        "ph-gauge sal-gauge dox-gauge temp-gauge";
+        "temp-gauge dox-gauge sal-gauge ph-gauge";
     }
 `
 

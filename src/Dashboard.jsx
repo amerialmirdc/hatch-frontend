@@ -242,7 +242,7 @@ function Dashboard() {
               // gradient: true,
               subArcs: [
                 {
-                  limit: 15,
+                  limit: 10,
                   color: '#EA4228',
                   showTick: true,
                   tooltip: {
@@ -253,7 +253,7 @@ function Dashboard() {
                   onMouseLeave: () => console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"),
                 },
                 {
-                  limit: 17,
+                  limit: 15,
                   color: '#F5CD19',
                   showTick: true,
                   tooltip: {
@@ -261,7 +261,7 @@ function Dashboard() {
                   }
                 },
                 {
-                  limit: 28,
+                  limit: 40,
                   color: '#5BE12C',
                   showTick: true,
                   tooltip: {
@@ -269,7 +269,7 @@ function Dashboard() {
                   }
                 },
                 {
-                  limit: 30, color: '#F5CD19', showTick: true,
+                  limit: 45, color: '#F5CD19', showTick: true,
                   tooltip: {
                     text: 'High temperature!'
                   }
@@ -297,15 +297,15 @@ function Dashboard() {
                   style: {fontSize: 10}
               },
                 ticks: [
-                  { value: 13 },
+                  { value: 0 },
                   { value: temperature },
-                  { value: 32 }
+                  { value: 50 }
                 ],
               }
             }}
             value={temperature}
-            minValue={10}
-            maxValue={35}
+            minValue={5}
+            maxValue={50}
           />
           <TempTitle>
           <h3>{temperature} ºC</h3>
@@ -324,7 +324,7 @@ function Dashboard() {
               // gradient: true,
               subArcs: [
                 {
-                  limit: 15,
+                  limit: 10,
                   color: '#EA4228',
                   showTick: true,
                   tooltip: {
@@ -335,7 +335,7 @@ function Dashboard() {
                   onMouseLeave: () => console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"),
                 },
                 {
-                  limit: 17,
+                  limit: 15,
                   color: '#F5CD19',
                   showTick: true,
                   tooltip: {
@@ -343,7 +343,7 @@ function Dashboard() {
                   }
                 },
                 {
-                  limit: 28,
+                  limit: 30,
                   color: '#5BE12C',
                   showTick: true,
                   tooltip: {
@@ -351,7 +351,7 @@ function Dashboard() {
                   }
                 },
                 {
-                  limit: 30, color: '#F5CD19', showTick: true,
+                  limit: 35, color: '#F5CD19', showTick: true,
                   tooltip: {
                     text: 'High Salinity!'
                   }
@@ -386,8 +386,8 @@ function Dashboard() {
               }
             }}
             value={salinity}
-            minValue={10}
-            maxValue={35}
+            minValue={5}
+            maxValue={40}
           />
 
           
@@ -408,7 +408,7 @@ function Dashboard() {
               // gradient: true,
               subArcs: [
                 {
-                  limit: 4,
+                  limit: 2,
                   color: '#EA4228',
                   showTick: true,
                   tooltip: {
@@ -419,7 +419,7 @@ function Dashboard() {
                   onMouseLeave: () => console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"),
                 },
                 {
-                  limit: 7,
+                  limit: 3,
                   color: '#F5CD19',
                   showTick: true,
                   tooltip: {
@@ -427,7 +427,7 @@ function Dashboard() {
                   }
                 },
                 {
-                  limit: 20,
+                  limit: 12,
                   color: '#5BE12C',
                   showTick: true,
                   tooltip: {
@@ -435,7 +435,7 @@ function Dashboard() {
                   }
                 },
                 {
-                  limit: 24, color: '#F5CD19', showTick: true,
+                  limit: 13, color: '#F5CD19', showTick: true,
                   tooltip: {
                     text: 'High Dissolved Oxygen!'
                   }
@@ -465,15 +465,15 @@ function Dashboard() {
                   style: {fontSize: 10}
               },
                 ticks: [
-                  { value: 13 },
+                  { value: 0 },
                   { value: dissolvedOxygen },
-                  { value: 32 }
+                  { value: 15 }
                 ],
               }
             }}
             value={dissolvedOxygen}
             minValue={0}
-            maxValue={30}
+            maxValue={15}
           />
             
           <DoxTitle>
@@ -493,7 +493,7 @@ function Dashboard() {
               // gradient: true,
               subArcs: [
                 {
-                  limit: 3,
+                  limit: 4,
                   color: '#EA4228',
                   showTick: true,
                   tooltip: {
@@ -504,7 +504,7 @@ function Dashboard() {
                   onMouseLeave: () => console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"),
                 },
                 {
-                  limit: 6.9,
+                  limit: 6,
                   color: '#F5CD19',
                   showTick: true,
                   tooltip: {
@@ -512,7 +512,7 @@ function Dashboard() {
                   }
                 },
                 {
-                  limit: 9.9,
+                  limit: 9,
                   color: '#5BE12C',
                   showTick: true,
                   tooltip: {
@@ -520,7 +520,7 @@ function Dashboard() {
                   }
                 },
                 {
-                  limit: 12, color: '#F5CD19', showTick: true,
+                  limit: 11, color: '#F5CD19', showTick: true,
                   tooltip: {
                     text: 'High pH!'
                   }
@@ -548,15 +548,15 @@ function Dashboard() {
                   style: {fontSize: 10}
               },
                 ticks: [
-                  { value: 0 },
+                  { value: 3 },
                   { value: ph },
-                  { value: 15 }
+                  { value: 12 }
                 ],
               }
             }}
             value={ph}
-            minValue={0}
-            maxValue={15}
+            minValue={3}
+            maxValue={12}
           />
           <PhTitle>
             <h3>{ph}</h3>
