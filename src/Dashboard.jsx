@@ -255,10 +255,10 @@ function Dashboard() {
 
   return (
     <MainContainer>
-      <button onClick={prev}>prev</button>
+      {/* <button onClick={prev}>prev</button>
       <span>date here</span>
       <button onClick={next}>next</button>
-      <Pagination $color="blue"></Pagination>
+      <Pagination $color="blue"></Pagination> */}
       {/* <Pagination2 $text="herre"></Pagination2> */}
 
       <FloatingMenuIcon onClick={toggleMenu} className={`${rotateStatus?'rotate':''}`} fontSize=""></FloatingMenuIcon>
