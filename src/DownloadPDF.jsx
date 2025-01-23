@@ -43,7 +43,7 @@ const downloadReportInPDF = async () => {
   }
   const fetchData = async () => {
     try { 
-      const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?pagination[start]=400&pagination[limit]=100', config);
+      const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?pagination[start]=0`&pagination[limit]=400', config);
       console.log('response', response)
       const doc = new jsPDF();
       const body = [];
@@ -55,7 +55,7 @@ const downloadReportInPDF = async () => {
           `${i.attributes.ph}`,
           `${i.attributes.rtd} ºC`,
           moment(`${i?.attributes?.createdAt}`).format('LTS'),
-          moment(`${i?.attributes?.createdAt}`).format('LTS'),
+          moment(`${i?.attributes?.createdAt}`).format('l'),
         ]);
       });
 

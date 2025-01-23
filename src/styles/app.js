@@ -304,6 +304,21 @@ const TempTitle = styled.div`
     }
 `
 
+const Pagination = styled.div.attrs(props => ({
+    $color: props.$color || "red",
+}))`
+ background-color: ${props=>props.$color};
+ height: 100px;
+`
+
+// Pagination = styled(() => (
+//     <div>
+//         {/* {props=>props.$text} */}
+//     </div>
+// ))``
+
+
+
 export {
     MainContainer,
     DashboardLayout,
@@ -317,5 +332,7 @@ export {
     PhTitle,
     SalTitle,
     DoxTitle,
-    TempTitle
+    TempTitle,
+    Pagination,
+    // Pagination2
 };

@@ -15,7 +15,8 @@ import {
   PhTitle,
   SalTitle,
   DoxTitle,
-  TempTitle
+  TempTitle,
+  Pagination,
 } from './styles/app';
 import axios from 'axios'
 
@@ -117,6 +118,8 @@ function Dashboard() {
   const [salinity_d, setSalinity_d] = useState(0)
   const [ph_d, setPh_d] = useState(0)
   const [sensorReaings_latest, setSensorReadings_latest] = useState([])
+  const [paginationLimit, setPaginationLimit] = useState(12)
+  const [paginationOffset, setPaginationOffset] = useState(1)
 
 
   useEffect(() => {
@@ -152,7 +155,7 @@ function Dashboard() {
     //fetch latest 12
     const fetchData2 = async () => {
       try { 
-        const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[limit]=12', config);
+        const {data: response} = await axios.get(`https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[start]=${paginationLimit*paginationOffset}&pagination[limit]=${paginationLimit}`, config);
         console.log('latest 12', response.data)
         let formattedData = []
         if(response.data){
@@ -197,11 +200,67 @@ function Dashboard() {
     }, 1000) 
   }
 
+  //fetch latest 12
+  const refetchLineChartData = async (limit, offset) => {
+    const config = {
+      headers: {
+          "Authorization": "Bearer ac7e0602ef932054c46724a7cba463ee0cfc3f39294b6242545399bcd6396e59fa62a455d483f2859b8a179fd5cac85ccc0978e0a7dd5a237035dca0b3ab5b3937a4eb7cf14cb9ea92d34c35e019801ed3dcaf2f405c93d5a3ed26c819e37eae07bbe054d1c186566017eada21f14b6a533d528769c8c26ef3f89aae75634529"
+      }
+    }
+  
+    try { 
+      const {data: response} = await axios.get(`https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[start]=${limit*offset}&pagination[limit]=${limit}`, config);
+      console.log('latest 12', response.data)
+      let formattedData = []
+      if(response.data){
+        response.data.forEach((i)=>{
+          formattedData.push({
+            ph: i?.attributes?.ph,
+            dox: i?.attributes?.dox,
+            sal: i?.attributes?.sal,
+            temp: i?.attributes?.rtd,
+            timestamp: moment(`${i?.attributes?.createdAt}`).add(5, 'minutes').format('LT'), // added 5 minutes here because the time in server is delayed 5mins
+          })
+        })
+
+        console.log('formatted data', formattedData)
+        setSensorReadings_latest(formattedData);
+      }
+      
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  const prev = () => {
+    // if(paginationOffset > 1){
+    //   setPaginationOffset(paginationOffset-1); 
+    //   refetchLineChartData(paginationLimit, paginationOffset);
+    //   console.log('pagination offset:', paginationOffset)
+    // }
+    setPaginationOffset(paginationOffset-1)
+    console.log('pagination offset:', paginationOffset)
+  }
+
+  const next = () => {
+    // let count = paginationOffset
+    // setPaginationOffset(count+1);
+    // refetchLineChartData(paginationLimit, paginationOffset);
+    setPaginationOffset(paginationOffset+1)
+    console.log('pagination offset:', paginationOffset)
+  }
+
   
 
 
   return (
     <MainContainer>
+      <button onClick={prev}>prev</button>
+      <span>date here</span>
+      <button onClick={next}>next</button>
+      <Pagination $color="blue"></Pagination>
+      {/* <Pagination2 $text="herre"></Pagination2> */}
+
       <FloatingMenuIcon onClick={toggleMenu} className={`${rotateStatus?'rotate':''}`} fontSize=""></FloatingMenuIcon>
       <LandscapeLineChart className={`${!hideGauges?'hidden-content':'show-content'}`}>
         <BarChart
