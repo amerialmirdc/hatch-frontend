@@ -119,7 +119,7 @@ function Dashboard() {
   const [ph_d, setPh_d] = useState(0)
   const [sensorReaings_latest, setSensorReadings_latest] = useState([])
   const [paginationLimit, setPaginationLimit] = useState(12)
-  const [paginationOffset, setPaginationOffset] = useState(1)
+  const [paginationOffset, setPaginationOffset] = useState(0)
 
 
   useEffect(() => {
