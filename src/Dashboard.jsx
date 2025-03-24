@@ -352,7 +352,7 @@ function Dashboard() {
             ])}
             {...chartSetting}
           />
-          <Pagination page={page} count={11} onChange={(e, page)=>handlePaginate(e,page)} variant="outlined" shape="rounded" style={{position:'relative', top: '-65px'}} />
+          {/* <Pagination page={page} count={11} onChange={(e, page)=>handlePaginate(e,page)} variant="outlined" shape="rounded" style={{position:'relative', top: '-65px'}} /> */}
         </LineGraph>
             
         <TempGauge>
