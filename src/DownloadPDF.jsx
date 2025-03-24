@@ -42,7 +42,7 @@ const downloadReportInPDF = async () => {
   }
   const fetchData = async () => {
     try { 
-      const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt:desc&pagination[start]=0&pagination[limit]=10000', config);
+      const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt:asc&pagination[start]=0&pagination[limit]=10000', config);
       console.log('response', response)
       const doc = new jsPDF();
       const body = [];
@@ -53,6 +53,7 @@ const downloadReportInPDF = async () => {
           `${i.attributes.sal} ppt`,
           `${i.attributes.ph}`,
           `${i.attributes.rtd} ºC`,
+          `${i.attributes.t2} ºC`,
           moment(`${i?.attributes?.createdAt}`).format('LTS'),
           moment(`${i?.attributes?.createdAt}`).format('l'),
         ]);
@@ -60,7 +61,7 @@ const downloadReportInPDF = async () => {
 
       doc.text("Hatch", 14, 10);
       autoTable(doc, {
-        head: [["ID", "Dissolved Oxygen", "Salinity", "pH", "Temperature", "Time", "Date"]],
+        head: [["ID", "Dissolved Oxygen", "Salinity", "pH", "Temperature", "Temperature 2", "Time", "Date"]],
         body: body,
       });
 

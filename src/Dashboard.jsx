@@ -16,12 +16,15 @@ import {
   SalTitle,
   DoxTitle,
   TempTitle,
-  Pagination,
+  // Pagination,
 } from './styles/app';
 import axios from 'axios'
-
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import GaugeComponent from 'react-gauge-component';
 import moment from 'moment'
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import Pagination from '@mui/material/Pagination';
 
 
 let deviceWidth = window.innerWidth
@@ -120,6 +123,8 @@ function Dashboard() {
   const [sensorReaings_latest, setSensorReadings_latest] = useState([])
   const [paginationLimit, setPaginationLimit] = useState(12)
   const [paginationOffset, setPaginationOffset] = useState(0)
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(0)
 
 
   useEffect(() => {
@@ -155,8 +160,8 @@ function Dashboard() {
     //fetch latest 12
     const fetchData2 = async () => {
       try { 
-        const {data: response} = await axios.get(`https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&pagination[start]=${paginationLimit*paginationOffset}&pagination[limit]=${paginationLimit}`, config);
-        console.log('latest 12', response.data)
+        const {data: response} = await axios.get(`https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt%3Adesc&filters[createdAt][$gte]=2025-03-12T00:00:00Z&filters[createdAt][$lt]=2025-03-13T00:00:00Z&pagination[start]=${paginationLimit*paginationOffset}&pagination[limit]=${paginationLimit}`, config);
+        console.log('latest 12', response)
         let formattedData = []
         if(response.data){
           response.data.forEach((i)=>{
@@ -200,6 +205,73 @@ function Dashboard() {
     }, 1000) 
   }
 
+  useEffect(() => {
+    const config = {
+      headers: {
+          "Authorization": "Bearer ac7e0602ef932054c46724a7cba463ee0cfc3f39294b6242545399bcd6396e59fa62a455d483f2859b8a179fd5cac85ccc0978e0a7dd5a237035dca0b3ab5b3937a4eb7cf14cb9ea92d34c35e019801ed3dcaf2f405c93d5a3ed26c819e37eae07bbe054d1c186566017eada21f14b6a533d528769c8c26ef3f89aae75634529"
+      }
+    }
+  
+    // fetch latest sensor reading
+    const fetchData = async () => {
+      try { 
+        const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?pagination[start]=0&pagination[limit]=10000', config);
+        console.log('response', response)
+        
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+    fetchData();
+  
+    
+  
+    return () => {
+      console.log("cleaned up");
+    };
+  }, []);
+  
+    // Download PDF
+  const downloadReportInPDF = async () => {
+    const config = {
+      headers: {
+          "Authorization": "Bearer ac7e0602ef932054c46724a7cba463ee0cfc3f39294b6242545399bcd6396e59fa62a455d483f2859b8a179fd5cac85ccc0978e0a7dd5a237035dca0b3ab5b3937a4eb7cf14cb9ea92d34c35e019801ed3dcaf2f405c93d5a3ed26c819e37eae07bbe054d1c186566017eada21f14b6a533d528769c8c26ef3f89aae75634529"
+      }
+    }
+    const fetchData = async () => {
+      try { 
+        const {data: response} = await axios.get('https://ras-backend.ap.ngrok.io/api/hatch-readings?sort[0]=createdAt:asc&pagination[start]=0&pagination[limit]=10000', config);
+        console.log('response', response)
+        const doc = new jsPDF();
+        const body = [];
+        response.data?.forEach((i) => {
+          body.push([
+            `${i.id}`,
+            `${i.attributes.dox} mg/L`,
+            `${i.attributes.sal} ppt`,
+            `${i.attributes.ph}`,
+            `${i.attributes.rtd} ºC`,
+            `${i.attributes.t2} ºC`,
+            moment(`${i?.attributes?.createdAt}`).format('LTS'),
+            moment(`${i?.attributes?.createdAt}`).format('l'),
+          ]);
+        });
+  
+        doc.text("Hatch", 14, 10);
+        autoTable(doc, {
+          head: [["ID", "Dissolved Oxygen", "Salinity", "pH", "Temperature", "Temperature 2", "Time", "Date"]],
+          body: body,
+        });
+  
+        doc.save(`Hatch-data-as-of-${moment().format('LL')}.pdf`);
+  
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+    fetchData();
+  };
+
   //fetch latest 12
   const refetchLineChartData = async (limit, offset) => {
     const config = {
@@ -232,22 +304,9 @@ function Dashboard() {
     }
   }
 
-  const prev = () => {
-    // if(paginationOffset > 1){
-    //   setPaginationOffset(paginationOffset-1); 
-    //   refetchLineChartData(paginationLimit, paginationOffset);
-    //   console.log('pagination offset:', paginationOffset)
-    // }
-    setPaginationOffset(paginationOffset-1)
-    console.log('pagination offset:', paginationOffset)
-  }
-
-  const next = () => {
-    // let count = paginationOffset
-    // setPaginationOffset(count+1);
-    // refetchLineChartData(paginationLimit, paginationOffset);
-    setPaginationOffset(paginationOffset+1)
-    console.log('pagination offset:', paginationOffset)
+  const handlePaginate = (e, _page) => {
+    setPage(_page)
+    console.log('current page: ', _page)
   }
 
   
@@ -260,7 +319,11 @@ function Dashboard() {
       <button onClick={next}>next</button>
       <Pagination $color="blue"></Pagination> */}
       {/* <Pagination2 $text="herre"></Pagination2> */}
-
+      <DownloadForOfflineIcon 
+        onClick={downloadReportInPDF}
+        style={{fontSize: '42px', color: '#AFAF9F', cursor: 'pointer', position: 'fixed', top: '15px', left: '15px'}}
+      ></DownloadForOfflineIcon>
+      
       <FloatingMenuIcon onClick={toggleMenu} className={`${rotateStatus?'rotate':''}`} fontSize=""></FloatingMenuIcon>
       <LandscapeLineChart className={`${!hideGauges?'hidden-content':'show-content'}`}>
         <BarChart
@@ -289,6 +352,7 @@ function Dashboard() {
             ])}
             {...chartSetting}
           />
+          <Pagination page={page} count={11} onChange={(e, page)=>handlePaginate(e,page)} variant="outlined" shape="rounded" style={{position:'relative', top: '-65px'}} />
         </LineGraph>
             
         <TempGauge>
